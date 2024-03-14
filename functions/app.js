@@ -37,13 +37,11 @@ const itemsSchema = {
   name: String,
 };
 
-router.get('/',(req,res)=>{
+router.get("/", (req, res) => {
   res.json({
-    "mission" : "Accomplished"
+    mission: "Accomplished",
   });
 });
-
-app.use('/.netlify/functions/app',router);
 
 const Item = mongoose.model("Item", itemsSchema);
 
@@ -77,7 +75,10 @@ app.get("/", async function (req, res) {
       console.log("Successfully saved default items.");
       res.redirect("/"); // Redirect to the root route after inserting default items
     } else {
-      res.render("list", { listTitle: "Today", newListItems: foundItems });
+      res.render("../views/list", {
+        listTitle: "Today",
+        newListItems: foundItems,
+      });
     }
   } catch (err) {
     console.log(err);
@@ -169,4 +170,5 @@ app.listen(3000, function () {
   console.log("Server started on port 3000");
 });
 
+app.use("/.netlify/functions/app", router);
 module.exports.handler = serverless(app);
