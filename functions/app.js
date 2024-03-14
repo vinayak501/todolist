@@ -100,7 +100,7 @@ app.get("/:customListName", async function (req, res) {
       list.save();
       res.redirect("/" + customListName);
     } else {
-      res.render("list", {
+      res.render("../views/list", {
         listTitle: foundList.name,
         newListItems: foundList.items,
       });
@@ -163,7 +163,7 @@ app.post("/delete", function (req, res) {
 });
 
 app.get("/about", function (req, res) {
-  res.render("about");
+  res.render("../views/about");
 });
 
 app.listen(3000, function () {
