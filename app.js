@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
+const serverless = require("serverless-http");
 
 const app = express();
 // const database = module.exports = () => {
@@ -21,7 +22,7 @@ const app = express();
 // }
 
 // database();
-
+const router = express.Router();
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,6 +36,14 @@ mongoose.connect(
 const itemsSchema = {
   name: String,
 };
+
+router.get('/',(req,res)=>{
+  res.json({
+    "mission" : "Accomplished"
+  });
+});
+
+app.use('/.netlify/functions/app',router);
 
 const Item = mongoose.model("Item", itemsSchema);
 
@@ -159,3 +168,5 @@ app.get("/about", function (req, res) {
 app.listen(3000, function () {
   console.log("Server started on port 3000");
 });
+
+module.exports.handler = serverless(app);
